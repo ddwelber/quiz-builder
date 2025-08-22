@@ -4,7 +4,7 @@ import { GetQuizzesService } from "../../services/get-quizzes";
 import { DeleteQuizService } from "../../services/delete-quiz";
 
 interface QuizSummary {
-  id: number;
+  id: string;
   title: string;
   questionCount: number;
 }
@@ -26,7 +26,7 @@ export const Home = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this quiz?")) return;
     try {
       await DeleteQuizService.deleteQuiz(id);

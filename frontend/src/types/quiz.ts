@@ -7,7 +7,7 @@ export interface Question {
 }
 
 export interface Quiz {
-  id: number;
+  id: string;
   title: string;
   createdAt: string;
   updatedAt?: string;
@@ -15,7 +15,7 @@ export interface Quiz {
 }
 
 export interface QuizSummary {
-  id: number;
+  id: string;
   title: string;
   questionCount: number;
 }
