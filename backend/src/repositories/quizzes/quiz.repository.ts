@@ -47,4 +47,14 @@ export class QuizRepository {
       },
     });
   }
+
+  static async deleteQuiz(id: string) {
+    await prisma.question.deleteMany({
+      where: { quizId: id },
+    });
+
+    return prisma.quiz.delete({
+      where: { id },
+    });
+  }
 }
