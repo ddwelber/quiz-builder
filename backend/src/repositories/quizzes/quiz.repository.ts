@@ -38,4 +38,13 @@ export class QuizRepository {
       questionCount: quiz._count.questions,
     }));
   }
+
+  static async getQuizById(id: string) {
+    return prisma.quiz.findUnique({
+      where: { id },
+      include: {
+        questions: true,
+      },
+    });
+  }
 }
