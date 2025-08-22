@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "../../lib/api";
 import { Link } from "react-router-dom";
 import { GetQuizzesService } from "../../services/get-quizzes";
+import { DeleteQuizService } from "../../services/delete-quiz";
 
 interface QuizSummary {
   id: number;
@@ -29,7 +29,7 @@ export const Home = () => {
   const handleDelete = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this quiz?")) return;
     try {
-      await api.delete(`/quizzes/${id}`);
+      await DeleteQuizService.deleteQuiz(id);
       setQuizzes(quizzes.filter((q) => q.id !== id));
     } catch (err) {
       console.error(err);
