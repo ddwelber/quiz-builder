@@ -1,11 +1,8 @@
-import { QuestionType } from "../../generated/prisma";
 import { prisma } from "../../lib/prisma";
+import { QuestionDTO } from "../../types/quizzes";
 
 export class QuizRepository {
-  static async createQuiz(
-    title: string,
-    questions: { type: QuestionType; text: string; options?: string[] }[]
-  ) {
+  static async createQuiz(title: string, questions: QuestionDTO[]) {
     return prisma.quiz.create({
       data: {
         title,
@@ -17,7 +14,28 @@ export class QuizRepository {
           })),
         },
       },
-      include: { questions: true },
+      include: {
+        questions: true,
+      },
     });
+  }
+
+  static async getAllQuizzes() {
+    const quizzes = await prisma.quiz.findMany({
+      include: {
+        _count: {
+          select: { questions: true },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return quizzes.map((quiz) => ({
+      id: quiz.id,
+      title: quiz.title,
+      questionCount: quiz._count.questions,
+    }));
   }
 }

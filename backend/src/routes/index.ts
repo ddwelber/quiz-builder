@@ -3,6 +3,6 @@ import quizRoutes from "./quiz";
 
 const router = Router();
 
-router.use("/quiz", quizRoutes);
+router.use("/quizzes", quizRoutes);
 
 export default router;
