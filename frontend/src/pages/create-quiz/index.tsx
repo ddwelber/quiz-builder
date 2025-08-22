@@ -3,6 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { CreateQuizService } from "../../services/create-quiz";
+import { useNavigate } from "react-router-dom";
 
 const questionSchema = z.object({
   type: z.enum(["BOOLEAN", "INPUT", "CHECKBOX"]),
@@ -21,6 +22,7 @@ type CreateQuizForm = z.infer<typeof createQuizSchema>;
 
 export const CreateQuiz = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -47,6 +49,7 @@ export const CreateQuiz = () => {
       await CreateQuizService.createQuiz(data.title, data.questions);
       alert("Quiz created successfully!");
       reset();
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Error creating quiz");
