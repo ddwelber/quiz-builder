@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetQuizzesService } from "../../services/get-quizzes";
 import { DeleteQuizService } from "../../services/delete-quiz";
+import { QuizCard } from "../../components/QuizCard";
 
 interface QuizSummary {
   id: string;
@@ -60,33 +61,13 @@ export const Home = () => {
       ) : (
         <div className="space-y-6">
           {quizzes.map((quiz) => (
-            <div
+            <QuizCard
               key={quiz.id}
-              className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 flex flex-col justify-between"
-            >
-              <div className="mb-4">
-                <h2 className="text-xl font-bold text-gray-800 mb-1">
-                  {quiz.title}
-                </h2>
-                <p className="text-gray-600">{quiz.questionCount} questions</p>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <Link
-                  to={`/quizzes/${quiz.id}`}
-                  className="text-blue-600 font-semibold hover:underline"
-                >
-                  View Details
-                </Link>
-
-                <button
-                  onClick={() => handleDelete(quiz.id)}
-                  className="cursor-pointer text-red-500 font-bold hover:text-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+              id={quiz.id}
+              title={quiz.title}
+              questionCount={quiz.questionCount}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       )}
